@@ -355,10 +355,10 @@ footer a:hover {
     background: #00b8d4;
 }
 
-/* Visually replace button text with "Add to Cart" while preserving DOM/JS handlers */
+
 .card .bnt {
     position: relative;
-    color: transparent; /* hide original text but keep accessible for screen readers */
+    color: transparent; 
 }
 .card .bnt::after {
     content: "Add to Cart";
@@ -369,10 +369,10 @@ footer a:hover {
     justify-content: center;
     color: #fff;
     font-weight: 600;
-    pointer-events: none; /* allow clicks to pass through to the button */
+    pointer-events: none; 
 }
 
-/* Buy Now button style (next to Add to Cart) */
+
 .card .buy-now {
     background: transparent;
     border: 1.5px solid #00d4ff;
@@ -511,7 +511,7 @@ footer a:hover {
     margin-bottom: 8px;
 }
 
-/* Sign-in required modal */
+
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -573,4 +573,5 @@ footer a:hover {
     color: #999;
     font-size: 1.1rem;
     cursor: pointer;
+
 }
