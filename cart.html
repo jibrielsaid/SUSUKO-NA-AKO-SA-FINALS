@@ -126,7 +126,7 @@
         padding: 0 20px 40px;
     }
 
-    /* Checkout Modal Styles */
+  
     .checkout-modal {
         display: none;
         position: fixed;
@@ -315,7 +315,7 @@
 
 <body>
 
-<!-- NAVBAR -->
+
 <nav class="navbar">
     <div class="logo"><h1>TECHPARTS HUB</h1></div>
     <ul class="menu">
@@ -347,21 +347,21 @@
 
 <a href="shop.html" class="back-link">← Back to Shop</a>
 
-<!-- Checkout Modal -->
+
 <div id="checkoutModal" class="checkout-modal">
     <div class="checkout-content">
         <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
         <h2 style="margin-top: 0; margin-bottom: 20px;">Checkout</h2>
         
-        <!-- User Information Section -->
+        
         <div class="checkout-section">
             <h3>Customer Information</h3>
             <div id="user-info-container">
-                <!-- User info will be populated here -->
+              
             </div>
         </div>
 
-        <!-- Payment Method Section -->
+      
         <div class="checkout-section">
             <h3>Mode of Payment</h3>
             <div class="payment-options">
@@ -392,11 +392,11 @@
             </div>
         </div>
 
-        <!-- Order Summary Section -->
+        
         <div class="checkout-section">
             <h3>Order Summary</h3>
             <div class="order-summary" id="order-summary">
-                <!-- Order items will be populated here -->
+         
             </div>
         </div>
 
@@ -423,24 +423,24 @@ function displayCart() {
         return;
     }
     
-    // Show checkout button if cart has items
+   
     const checkoutBtn = document.querySelector('.checkout-btn');
     if (checkoutBtn) checkoutBtn.style.display = "block";
 
     let totalPrice = 0;
 
     cart.forEach((item, index) => {
-        // item.price is the display string (e.g. "$3,500"), item.amount is the numeric value
+      
         let amount = 0;
         if (typeof item.amount === 'number') {
             amount = item.amount;
         } else if (typeof item.price === 'string') {
-            // strip all non-numeric/non-dot characters
+           
             const cleaned = item.price.replace(/[^0-9.]/g, '');
             amount = parseFloat(cleaned) || 0;
         }
         
-        // Get quantity (default to 1 if not set for backward compatibility)
+     
         const quantity = item.quantity || 1;
         const itemTotal = amount * quantity;
         totalPrice += itemTotal;
@@ -481,14 +481,14 @@ function checkout() {
         return;
     }
 
-    // Check if user is logged in
+    
     let user = null;
     try {
         const userRaw = localStorage.getItem('user');
         if (userRaw) {
             user = JSON.parse(userRaw);
         } else {
-            // Try to get from session
+            
             const sessionRaw = sessionStorage.getItem('session');
             if (sessionRaw) {
                 const session = JSON.parse(sessionRaw);
@@ -509,19 +509,19 @@ function checkout() {
         return;
     }
 
-    // Populate user information
+
     populateUserInfo(user);
     
-    // Populate order summary
+ 
     populateOrderSummary(cart);
     
-    // Show modal
+
     document.getElementById('checkoutModal').classList.add('active');
 }
 
 function closeCheckoutModal() {
     document.getElementById('checkoutModal').classList.remove('active');
-    // Reset payment selection
+   
     document.querySelectorAll('input[name="payment"]').forEach(radio => {
         radio.checked = false;
     });
@@ -532,17 +532,17 @@ function closeCheckoutModal() {
 }
 
 function selectPayment(value) {
-    // Uncheck all radios first
+   
     document.querySelectorAll('input[name="payment"]').forEach(radio => {
         radio.checked = false;
     });
     
-    // Remove selected class from all options
+ 
     document.querySelectorAll('.payment-option').forEach(option => {
         option.classList.remove('selected');
     });
     
-    // Select the clicked option
+
     const radio = document.querySelector(`input[value="${value}"]`);
     if (radio) {
         radio.checked = true;
@@ -641,20 +641,20 @@ function confirmCheckout() {
         totalPrice += amount * quantity;
     });
     
-    // Show confirmation message
+    
     alert(`Order confirmed!\n\nPayment Method: ${paymentMethods[paymentMethod]}\nTotal Amount: $${totalPrice.toLocaleString()}\n\nThank you for your purchase!`);
     
-    // Clear cart
+    
     localStorage.removeItem("cart");
     
-    // Close modal
+
     closeCheckoutModal();
     
-    // Refresh cart display
+   
     displayCart();
 }
 
-// Close modal when clicking outside
+
 document.addEventListener('click', function(event) {
     const modal = document.getElementById('checkoutModal');
     if (event.target === modal) {
@@ -664,7 +664,7 @@ document.addEventListener('click', function(event) {
 
 displayCart();
 
-// Logout functionality
+
 (function(){
     function showUser() {
         let raw = null;
@@ -683,10 +683,10 @@ displayCart();
         }
 
         logout.addEventListener('click', function(){
-            // Remove current user, but keep accounts list for future logins
+         
             localStorage.removeItem('user');
             try { sessionStorage.removeItem('session'); } catch(e){}
-            localStorage.removeItem('cart'); // Clear cart on logout
+            localStorage.removeItem('cart'); 
             location.reload();
         });
     }
@@ -696,4 +696,5 @@ displayCart();
 </script>
 
 </body>
+
 </html>
