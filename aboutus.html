@@ -82,7 +82,7 @@
     <script>
         (function(){
             function showUser() {
-                // Prefer active session info for display; fall back to stored user
+               
                 let raw = null;
                 try { raw = sessionStorage.getItem('session') || localStorage.getItem('user'); } catch(e) { raw = localStorage.getItem('user'); }
                 const navUser = document.getElementById('nav-user');
@@ -99,7 +99,7 @@
                 }
 
                 logout.addEventListener('click', function(){
-                    // Save current cart to user account before logout
+                    
                     try {
                         const cartRaw = localStorage.getItem('cart');
                         if (cartRaw) {
@@ -117,7 +117,7 @@
                         }
                     } catch (e) {}
                     
-                    // Remove current user, but keep accounts list for future logins
+                    
                     localStorage.removeItem('user');
                     try { sessionStorage.removeItem('session'); } catch(e){}
                     localStorage.removeItem('cart'); // Clear cart on logout
@@ -130,4 +130,5 @@
     </script>
 
 </body>
+
 </html>
