@@ -207,7 +207,7 @@
 
 <body>
 
-<!-- ================= NAVIGATION ================= -->
+
 <nav class="navbar">
     <div class="logo"><h1>TECHPARTS HUB</h1></div>
 
@@ -221,20 +221,19 @@
 </nav>
 
 
-<!-- ================= ACCOUNT CARD ================= -->
+
 <section class="account-section">
     <div class="account-card">
 
-        <!-- TABS -->
+    
         <div class="account-tabs">
             <button class="account-tab active" data-tab="signup">Create Account</button>
             <button class="account-tab" data-tab="login">Login</button>
         </div>
 
-        <!-- MESSAGES -->
         <div id="form-message" class="account-message" style="display:none;"></div>
 
-        <!-- REGISTER FORM -->
+     
         <form id="signup-form" class="account-form" data-form="signup">
             <div class="form-field">
                 <label>Full name</label>
@@ -304,12 +303,12 @@ function setTab(tabName){
 
 tabs.forEach(tab => tab.addEventListener("click", () => setTab(tab.dataset.tab)));
 
-// Email validation helper
+
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Show message helper
+
 function showMessage(text, type) {
     const msg = document.getElementById("form-message");
     msg.textContent = text;
@@ -317,7 +316,7 @@ function showMessage(text, type) {
     msg.style.display = "block";
 }
 
-// SIGNUP FORM
+
 document.getElementById("signup-form").addEventListener("submit", async function(e){
     e.preventDefault();
 
@@ -328,7 +327,7 @@ document.getElementById("signup-form").addEventListener("submit", async function
     const pw = document.getElementById("password").value;
     const cpw = document.getElementById("confirm").value;
 
-    // Validation
+    
     if (!name) {
         showMessage("Please enter your full name.", "error");
         return;
@@ -369,18 +368,18 @@ document.getElementById("signup-form").addEventListener("submit", async function
         return;
     }
 
-    // Use localStorage to register
+   
     try {
         const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
         
-        // Check if email already exists
+       
         const existingAccount = accounts.find(acc => acc.email && acc.email.toLowerCase() === email.toLowerCase());
         if (existingAccount) {
             showMessage("An account with this email already exists.", "error");
             return;
         }
         
-        // Create new account
+      
         const newAccount = { 
             name: name, 
             email: email, 
@@ -399,7 +398,7 @@ document.getElementById("signup-form").addEventListener("submit", async function
             setTab("login");
             document.getElementById("login-email").value = email;
             document.getElementById("login-password").value = "";
-            // Clear signup form
+            
             document.getElementById("name").value = "";
             document.getElementById("email").value = "";
             document.getElementById("phone").value = "";
@@ -412,24 +411,23 @@ document.getElementById("signup-form").addEventListener("submit", async function
     }
 });
 
-// LOGIN FORM
+
 document.getElementById("login-form").addEventListener("submit", async function(e){
     e.preventDefault();
 
     const email = document.getElementById("login-email").value.trim();
     const pw = document.getElementById("login-password").value;
 
-    // Validation
+    
     if (!email || !pw) {
         showMessage("Please enter both email and password.", "error");
         return;
     }
 
-    // Use localStorage to login
+    
     try {
         const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
         
-        // Find account with matching email and password
         const account = accounts.find(acc => 
             acc.email && acc.email.toLowerCase() === email.toLowerCase() && 
             acc.password === pw
@@ -440,10 +438,10 @@ document.getElementById("login-form").addEventListener("submit", async function(
             return;
         }
         
-        // Store user data in localStorage
+       
         localStorage.setItem("user", JSON.stringify(account));
 
-        // Create session
+      
         try {
             const session = { 
                 name: account.name || "", 
@@ -456,7 +454,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
         showMessage("Login successful! Redirecting...", "success");
 
         setTimeout(() => {
-            // Check for redirect parameter
+           
             const urlParams = new URLSearchParams(window.location.search);
             const next = urlParams.get('next') || 'shop.html';
             window.location.href = next;
@@ -468,4 +466,5 @@ document.getElementById("login-form").addEventListener("submit", async function(
 </script>
 
 </body>
+
 </html>
