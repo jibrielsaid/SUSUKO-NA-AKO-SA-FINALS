@@ -98,7 +98,7 @@
     </script>
 
     <script>
-        // Update cart badge count in navigation
+        
         function updateCartBadgeNav() {
             try {
                 const raw = localStorage.getItem('cart');
@@ -119,14 +119,14 @@
                     }
                 }
             } catch (e) {
-                // Ignore errors
+             
             }
         }
         
-        // Update cart badge on page load
+       
         updateCartBadgeNav();
         
-        // Logout functionality
+        
         (function(){
             function showUser() {
                 let raw = null;
@@ -145,7 +145,7 @@
                 }
 
                 logout.addEventListener('click', function(){
-                    // Remove current user, but keep accounts list for future logins
+                  
                     localStorage.removeItem('user');
                     try { sessionStorage.removeItem('session'); } catch(e){}
                     localStorage.removeItem('cart'); // Clear cart on logout
@@ -158,5 +158,6 @@
     </script>
    
    
+
 
 
