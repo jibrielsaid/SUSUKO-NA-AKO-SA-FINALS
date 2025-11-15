@@ -14,7 +14,7 @@
     
     
     <style>
-        /* Add to Cart Notification */
+        
         .cart-notification {
             position: fixed;
             top: 80px;
@@ -126,7 +126,6 @@
     </div>
 </nav>
 
-    <!-- Add to Cart Notification -->
     <div id="cart-notification" class="cart-notification">
         <i class="fa-solid fa-check-circle"></i>
         <span class="cart-notification-text" id="cart-notification-text">Item added to cart!</span>
@@ -223,7 +222,7 @@
     </footer>
 
     <script>
-        // Notification function for add to cart
+       
         function showAddToCartNotification(itemName, quantity) {
             const notification = document.getElementById('cart-notification');
             const notificationText = document.getElementById('cart-notification-text');
@@ -238,7 +237,7 @@
                 notificationText.textContent = message;
                 notification.classList.add('show');
                 
-                // Auto-hide after 3 seconds
+               
                 setTimeout(function() {
                     closeCartNotification();
                 }, 3000);
@@ -252,7 +251,7 @@
             }
         }
         
-        // Update cart badge in navigation
+        
         function updateCartBadgeNav() {
             try {
                 const raw = localStorage.getItem('cart');
@@ -273,14 +272,14 @@
                     }
                 }
             } catch (e) {
-                // Ignore errors
+              
             }
         }
         
-        // Update navigation badge on page load
+        
         updateCartBadgeNav();
         
-        // Logout functionality
+        
         (function(){
             function showUser() {
                 let raw = null;
@@ -299,7 +298,7 @@
                 }
 
                 logout.addEventListener('click', function(){
-                    // Remove current user, but keep accounts list for future logins
+                    
                     localStorage.removeItem('user');
                     try { sessionStorage.removeItem('session'); } catch(e){}
                     localStorage.removeItem('cart'); // Clear cart on logout
@@ -310,7 +309,7 @@
             showUser();
         })();
         
-        // Attach add-to-cart handlers that add item to localStorage.cart
+        
         (function(){
             function parsePrice(text){
                 if (!text) return 0;
@@ -321,78 +320,78 @@
             const buttons = document.querySelectorAll('.card .bnt');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function(e){
-                    // require active session before adding to cart
+                   
                     try {
                         const sess = sessionStorage.getItem('session');
                         if (!sess) {
-                            // redirect to login (account) page; after login user returns to shop
+                            
                             window.location.href = 'account.html?next=shop.html';
                             return;
                         }
                     } catch (err) {
-                        // if sessionStorage not available, fall back to requiring localStorage.user
+                       
                         if (!localStorage.getItem('user')) {
                             window.location.href = 'account.html?next=shop.html';
                             return;
                         }
                     }
-                    // find the card
+                   
                     const card = btn.closest('.card');
                     if (!card) return;
                     const titleEl = card.querySelector('.title');
                     const priceEl = card.querySelector('.price');
                     const imgEl = card.querySelector('.img img');
                     const name = titleEl ? titleEl.textContent.trim() : 'Item';
-                    // keep the displayed price string (e.g. "$3,500") so cart UI shows it
+                   
                     const priceStr = priceEl ? priceEl.textContent.trim() : '$0';
                     const price = priceEl ? parsePrice(priceEl.textContent) : 0;
                     const img = imgEl ? (imgEl.getAttribute('src') || '') : '';
 
-                    // Add to cart (localStorage) - check if item already exists
+                   
                     try {
                         const raw = localStorage.getItem('cart');
                         const cart = raw ? JSON.parse(raw) : [];
                         
-                        // Check if item with same name already exists
+                       
                         const existingItemIndex = cart.findIndex(item => item.name === name);
                         
                         let finalQuantity = 1;
                         if (existingItemIndex !== -1) {
-                            // Item exists - increment quantity
+                         
                             if (!cart[existingItemIndex].quantity) {
                                 cart[existingItemIndex].quantity = 1;
                             }
                             cart[existingItemIndex].quantity += 1;
                             finalQuantity = cart[existingItemIndex].quantity;
                         } else {
-                            // New item - add with quantity 1
+                   
                             cart.push({ name: name, price: priceStr, amount: price, img: img, quantity: 1 });
                         }
                         
                         localStorage.setItem('cart', JSON.stringify(cart));
                         
-                        // Update cart badge
+                       
                         updateCartBadgeNav();
                         
-                        // Show notification that item was added with quantity
+                   
                         showAddToCartNotification(name, finalQuantity);
                     } catch (err) {
-                        // fallback: overwrite
+                        
                         const newCart = [{ name: name, price: priceStr, amount: price, img: img, quantity: 1 }];
                         localStorage.setItem('cart', JSON.stringify(newCart));
                         updateCartBadgeNav();
                         showAddToCartNotification(name, 1);
                     }
                     
-                    // Stay on shop page - no redirect, user can continue shopping
+                   
                 });
             });
 
-            // Buy Now buttons: add the item then go directly to checkout
+     
             const buyNowBtns = document.querySelectorAll('.card .buy-now');
             buyNowBtns.forEach(btn => {
                 btn.addEventListener('click', function(e){
-                    // require active session before buy now
+                   
                     try {
                         const sess = sessionStorage.getItem('session');
                         if (!sess) {
@@ -419,23 +418,23 @@
                         const raw = localStorage.getItem('cart');
                         const cart = raw ? JSON.parse(raw) : [];
                         
-                        // Check if item with same name already exists
+                        
                         const existingItemIndex = cart.findIndex(item => item.name === name);
                         
                         if (existingItemIndex !== -1) {
-                            // Item exists - increment quantity
+                       
                             if (!cart[existingItemIndex].quantity) {
                                 cart[existingItemIndex].quantity = 1;
                             }
                             cart[existingItemIndex].quantity += 1;
                         } else {
-                            // New item - add with quantity 1
+                      
                             cart.push({ name: name, price: priceStr, amount: price, img: img, quantity: 1 });
                         }
                         
                         localStorage.setItem('cart', JSON.stringify(cart));
                         
-                        // Update cart badge
+                     
                         updateCartBadgeNav();
                     } catch (err) {
                         const newCart = [{ name: name, price: priceStr, amount: price, img: img, quantity: 1 }];
@@ -443,7 +442,7 @@
                         updateCartBadgeNav();
                     }
 
-                    // Redirect straight to cart (show items) for Buy Now
+                    
                     window.location.href = 'cart.html';
                 });
             });
@@ -451,4 +450,5 @@
     </script>
 
 </body>
+
 </html>
